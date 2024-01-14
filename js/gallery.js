@@ -63,3 +63,24 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
+
+const gallery = document.querySelector(".gallery");
+const fragment = document.createDocumentFragment();
+
+images.forEach((image) => {
+  const elemLi = document.createElement("li");
+  const elemA = document.createElement("a");
+  const elemImg = document.createElement("img");
+
+  elemImg.setAttribute("class", "gallery-image");
+  elemImg.setAttribute("src", image.preview);
+  elemImg.setAttribute("alt", image.description);
+  elemImg.setAttribute("data-source", image.original);
+
+  elemA.setAttribute("href", image.original);
+  elemA.appendChild(elemImg);
+  elemLi.appendChild(elemA);
+  fragment.appendChild(elemLi);
+});
+
+gallery.appendChild(fragment);
