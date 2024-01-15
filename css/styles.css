@@ -21,6 +21,7 @@ img {
   flex-shrink: 0;
   transition: transform 0.1s;
 }
+
 img:hover {
   transform: scale(1.0444);
   cursor: pointer;
