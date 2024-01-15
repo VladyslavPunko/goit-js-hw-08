@@ -83,9 +83,10 @@ images.forEach((image) => {
   fragment.appendChild(elemLi);
 
   elemA.addEventListener("click", function (e) {
-    e.preventDefault(); // Відмінити дії за замовчуванням
-    // Тут ви можете додати код для відкриття модального вікна або виконання інших дій
+    e.preventDefault(); 
   });
 });
 
 gallery.appendChild(fragment);
+
+
