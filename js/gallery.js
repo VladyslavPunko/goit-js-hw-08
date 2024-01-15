@@ -65,28 +65,52 @@ const images = [
 ];
 
 const gallery = document.querySelector(".gallery");
-const fragment = document.createDocumentFragment();
 
-images.forEach((image) => {
-  const elemLi = document.createElement("li");
-  const elemA = document.createElement("a");
-  const elemImg = document.createElement("img");
+function listTemplate(image) {
+  return `<li class="gallery-item">
+  <a class="gallery-link" href="${image.original}">
+  <img
+      class="gallery-image"
+      src="${image.preview}"
+      data-source="${image.original}"
+      alt="${image.description}"
+  />
+  </a>
+</li>`;
+}
 
-  elemImg.setAttribute("class", "gallery-image");
-  elemImg.setAttribute("src", image.preview);
-  elemImg.setAttribute("alt", image.description);
-  elemImg.setAttribute("data-source", image.original);
+function addListTemplate(images) {
+  return images.map(listTemplate).join("");
+}
 
-  elemA.setAttribute("href", image.original);
-  elemA.appendChild(elemImg);
-  elemLi.appendChild(elemA);
-  fragment.appendChild(elemLi);
+function render() {
+  const murkkup = addListTemplate(images);
+  gallery.innerHTML = murkkup;
+}
 
-  elemA.addEventListener("click", function (e) {
-    e.preventDefault(); 
-  });
+render();
+
+gallery.addEventListener("click", e => {
+  e.preventDefault();
+
+  if (e.target === e.currentTarget) return;
+  const prewieLink = e.target.getAttribute("data-source");
+  const instance = basicLightbox.create(`
+    <img src="${prewieLink}" width="1112" height="640">
+`,
+{
+    onShow: instance => {
+        document.addEventListener('keydown', closeModal);
+    },
+    onClose: instance => {
+        document.removeEventListener('keydown', closeModal);
+    },
+})
+    function closeModal(e) {
+        if(e.code === 'Escape')
+        instance.close()
+    }
+
+instance.show()
 });
-
-gallery.appendChild(fragment);
-
 
